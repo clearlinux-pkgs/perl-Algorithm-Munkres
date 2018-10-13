@@ -4,15 +4,15 @@
 #
 Name     : perl-Algorithm-Munkres
 Version  : 0.08
-Release  : 2
+Release  : 3
 URL      : https://cpan.metacpan.org/authors/id/T/TP/TPEDERSE/Algorithm-Munkres-0.08.tar.gz
 Source0  : https://cpan.metacpan.org/authors/id/T/TP/TPEDERSE/Algorithm-Munkres-0.08.tar.gz
 Source1  : http://http.debian.net/debian/pool/main/liba/libalgorithm-munkres-perl/libalgorithm-munkres-perl_0.08-3.debian.tar.xz
 Summary  : Munkres.pm
 Group    : Development/Tools
 License  : GPL-2.0
-Requires: perl-Algorithm-Munkres-license
-Requires: perl-Algorithm-Munkres-man
+Requires: perl-Algorithm-Munkres-license = %{version}-%{release}
+BuildRequires : buildreq-cpan
 
 %description
 NAME
@@ -22,6 +22,15 @@ This module extends the solution of Assignment problem for square
 matrices to rectangular matrices by padding zeros. Thus a rectangular
 matrix is converted to square matrix by padding necessary zeros.
 
+%package dev
+Summary: dev components for the perl-Algorithm-Munkres package.
+Group: Development
+Provides: perl-Algorithm-Munkres-devel = %{version}-%{release}
+
+%description dev
+dev components for the perl-Algorithm-Munkres package.
+
+
 %package license
 Summary: license components for the perl-Algorithm-Munkres package.
 Group: Default
@@ -30,19 +39,11 @@ Group: Default
 license components for the perl-Algorithm-Munkres package.
 
 
-%package man
-Summary: man components for the perl-Algorithm-Munkres package.
-Group: Default
-
-%description man
-man components for the perl-Algorithm-Munkres package.
-
-
 %prep
-tar -xf %{SOURCE1}
-cd ..
 %setup -q -n Algorithm-Munkres-0.08
-mkdir -p %{_topdir}/BUILD/Algorithm-Munkres-0.08/deblicense/
+cd ..
+%setup -q -T -D -n Algorithm-Munkres-0.08 -b 1
+mkdir -p deblicense/
 mv %{_topdir}/BUILD/debian/* %{_topdir}/BUILD/Algorithm-Munkres-0.08/deblicense/
 
 %build
@@ -67,12 +68,12 @@ make TEST_VERBOSE=1 test
 
 %install
 rm -rf %{buildroot}
-mkdir -p %{buildroot}/usr/share/doc/perl-Algorithm-Munkres
-cp deblicense/copyright %{buildroot}/usr/share/doc/perl-Algorithm-Munkres/deblicense_copyright
+mkdir -p %{buildroot}/usr/share/package-licenses/perl-Algorithm-Munkres
+cp deblicense/copyright %{buildroot}/usr/share/package-licenses/perl-Algorithm-Munkres/deblicense_copyright
 if test -f Makefile.PL; then
-make pure_install PERL_INSTALL_ROOT=%{buildroot}
+make pure_install PERL_INSTALL_ROOT=%{buildroot} INSTALLDIRS=vendor
 else
-./Build install --installdirs=site --destdir=%{buildroot}
+./Build install --installdirs=vendor --destdir=%{buildroot}
 fi
 find %{buildroot} -type f -name .packlist -exec rm -f {} ';'
 find %{buildroot} -depth -type d -exec rmdir {} 2>/dev/null ';'
@@ -81,12 +82,12 @@ find %{buildroot} -type f -name '*.bs' -empty -exec rm -f {} ';'
 
 %files
 %defattr(-,root,root,-)
-/usr/lib/perl5/site_perl/5.26.1/Algorithm/Munkres.pm
+/usr/lib/perl5/vendor_perl/5.26.1/Algorithm/Munkres.pm
 
-%files license
-%defattr(-,root,root,-)
-/usr/share/doc/perl-Algorithm-Munkres/deblicense_copyright
-
-%files man
+%files dev
 %defattr(-,root,root,-)
 /usr/share/man/man3/Algorithm::Munkres.3
+
+%files license
+%defattr(0644,root,root,0755)
+/usr/share/package-licenses/perl-Algorithm-Munkres/deblicense_copyright
