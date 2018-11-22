@@ -4,7 +4,7 @@
 #
 Name     : perl-Algorithm-Munkres
 Version  : 0.08
-Release  : 3
+Release  : 4
 URL      : https://cpan.metacpan.org/authors/id/T/TP/TPEDERSE/Algorithm-Munkres-0.08.tar.gz
 Source0  : https://cpan.metacpan.org/authors/id/T/TP/TPEDERSE/Algorithm-Munkres-0.08.tar.gz
 Source1  : http://http.debian.net/debian/pool/main/liba/libalgorithm-munkres-perl/libalgorithm-munkres-perl_0.08-3.debian.tar.xz
@@ -82,7 +82,7 @@ find %{buildroot} -type f -name '*.bs' -empty -exec rm -f {} ';'
 
 %files
 %defattr(-,root,root,-)
-/usr/lib/perl5/vendor_perl/5.26.1/Algorithm/Munkres.pm
+/usr/lib/perl5/vendor_perl/5.28.0/Algorithm/Munkres.pm
 
 %files dev
 %defattr(-,root,root,-)
