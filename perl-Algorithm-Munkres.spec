@@ -4,7 +4,7 @@
 #
 Name     : perl-Algorithm-Munkres
 Version  : 0.08
-Release  : 8
+Release  : 9
 URL      : https://cpan.metacpan.org/authors/id/T/TP/TPEDERSE/Algorithm-Munkres-0.08.tar.gz
 Source0  : https://cpan.metacpan.org/authors/id/T/TP/TPEDERSE/Algorithm-Munkres-0.08.tar.gz
 Source1  : http://http.debian.net/debian/pool/main/liba/libalgorithm-munkres-perl/libalgorithm-munkres-perl_0.08-3.debian.tar.xz
@@ -13,6 +13,7 @@ Group    : Development/Tools
 License  : GPL-2.0
 Requires: perl-Algorithm-Munkres-license = %{version}-%{release}
 BuildRequires : buildreq-cpan
+BuildRequires : perl(Test::More)
 
 %description
 NAME
@@ -26,6 +27,7 @@ matrix is converted to square matrix by padding necessary zeros.
 Summary: dev components for the perl-Algorithm-Munkres package.
 Group: Development
 Provides: perl-Algorithm-Munkres-devel = %{version}-%{release}
+Requires: perl-Algorithm-Munkres = %{version}-%{release}
 
 %description dev
 dev components for the perl-Algorithm-Munkres package.
@@ -44,7 +46,7 @@ license components for the perl-Algorithm-Munkres package.
 cd ..
 %setup -q -T -D -n Algorithm-Munkres-0.08 -b 1
 mkdir -p deblicense/
-mv %{_topdir}/BUILD/debian/* %{_topdir}/BUILD/Algorithm-Munkres-0.08/deblicense/
+cp -r %{_topdir}/BUILD/debian/* %{_topdir}/BUILD/Algorithm-Munkres-0.08/deblicense/
 
 %build
 export http_proxy=http://127.0.0.1:9/
@@ -82,7 +84,7 @@ find %{buildroot} -type f -name '*.bs' -empty -exec rm -f {} ';'
 
 %files
 %defattr(-,root,root,-)
-/usr/lib/perl5/vendor_perl/5.28.1/Algorithm/Munkres.pm
+/usr/lib/perl5/vendor_perl/5.28.2/Algorithm/Munkres.pm
 
 %files dev
 %defattr(-,root,root,-)
