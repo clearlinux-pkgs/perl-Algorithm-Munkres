@@ -4,7 +4,7 @@
 #
 Name     : perl-Algorithm-Munkres
 Version  : 0.08
-Release  : 12
+Release  : 13
 URL      : https://cpan.metacpan.org/authors/id/T/TP/TPEDERSE/Algorithm-Munkres-0.08.tar.gz
 Source0  : https://cpan.metacpan.org/authors/id/T/TP/TPEDERSE/Algorithm-Munkres-0.08.tar.gz
 Source1  : http://http.debian.net/debian/pool/main/liba/libalgorithm-munkres-perl/libalgorithm-munkres-perl_0.08-3.debian.tar.xz
@@ -12,6 +12,7 @@ Summary  : Munkres.pm
 Group    : Development/Tools
 License  : GPL-2.0
 Requires: perl-Algorithm-Munkres-license = %{version}-%{release}
+Requires: perl-Algorithm-Munkres-perl = %{version}-%{release}
 BuildRequires : buildreq-cpan
 BuildRequires : perl(Test::More)
 
@@ -41,18 +42,28 @@ Group: Default
 license components for the perl-Algorithm-Munkres package.
 
 
+%package perl
+Summary: perl components for the perl-Algorithm-Munkres package.
+Group: Default
+Requires: perl-Algorithm-Munkres = %{version}-%{release}
+
+%description perl
+perl components for the perl-Algorithm-Munkres package.
+
+
 %prep
 %setup -q -n Algorithm-Munkres-0.08
-cd ..
-%setup -q -T -D -n Algorithm-Munkres-0.08 -b 1
+cd %{_builddir}
+tar xf %{_sourcedir}/libalgorithm-munkres-perl_0.08-3.debian.tar.xz
+cd %{_builddir}/Algorithm-Munkres-0.08
 mkdir -p deblicense/
-cp -r %{_topdir}/BUILD/debian/* %{_topdir}/BUILD/Algorithm-Munkres-0.08/deblicense/
+cp -r %{_builddir}/debian/* %{_builddir}/Algorithm-Munkres-0.08/deblicense/
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-export LANG=C
+export LANG=C.UTF-8
 if test -f Makefile.PL; then
 %{__perl} Makefile.PL
 make  %{?_smp_mflags}
@@ -62,7 +73,7 @@ else
 fi
 
 %check
-export LANG=C
+export LANG=C.UTF-8
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
@@ -71,7 +82,7 @@ make TEST_VERBOSE=1 test
 %install
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/perl-Algorithm-Munkres
-cp deblicense/copyright %{buildroot}/usr/share/package-licenses/perl-Algorithm-Munkres/deblicense_copyright
+cp %{_builddir}/Algorithm-Munkres-0.08/deblicense/copyright %{buildroot}/usr/share/package-licenses/perl-Algorithm-Munkres/e4263455f1c2bafee69226bd358a27dfd3a9f587
 if test -f Makefile.PL; then
 make pure_install PERL_INSTALL_ROOT=%{buildroot} INSTALLDIRS=vendor
 else
@@ -84,7 +95,6 @@ find %{buildroot} -type f -name '*.bs' -empty -exec rm -f {} ';'
 
 %files
 %defattr(-,root,root,-)
-/usr/lib/perl5/vendor_perl/5.28.2/Algorithm/Munkres.pm
 
 %files dev
 %defattr(-,root,root,-)
@@ -92,4 +102,8 @@ find %{buildroot} -type f -name '*.bs' -empty -exec rm -f {} ';'
 
 %files license
 %defattr(0644,root,root,0755)
-/usr/share/package-licenses/perl-Algorithm-Munkres/deblicense_copyright
+/usr/share/package-licenses/perl-Algorithm-Munkres/e4263455f1c2bafee69226bd358a27dfd3a9f587
+
+%files perl
+%defattr(-,root,root,-)
+/usr/lib/perl5/vendor_perl/5.30.1/Algorithm/Munkres.pm
