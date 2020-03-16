@@ -4,7 +4,7 @@
 #
 Name     : perl-Algorithm-Munkres
 Version  : 0.08
-Release  : 13
+Release  : 14
 URL      : https://cpan.metacpan.org/authors/id/T/TP/TPEDERSE/Algorithm-Munkres-0.08.tar.gz
 Source0  : https://cpan.metacpan.org/authors/id/T/TP/TPEDERSE/Algorithm-Munkres-0.08.tar.gz
 Source1  : http://http.debian.net/debian/pool/main/liba/libalgorithm-munkres-perl/libalgorithm-munkres-perl_0.08-3.debian.tar.xz
@@ -82,7 +82,7 @@ make TEST_VERBOSE=1 test
 %install
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/perl-Algorithm-Munkres
-cp %{_builddir}/Algorithm-Munkres-0.08/deblicense/copyright %{buildroot}/usr/share/package-licenses/perl-Algorithm-Munkres/e4263455f1c2bafee69226bd358a27dfd3a9f587
+cp %{_builddir}/debian/copyright %{buildroot}/usr/share/package-licenses/perl-Algorithm-Munkres/e4263455f1c2bafee69226bd358a27dfd3a9f587
 if test -f Makefile.PL; then
 make pure_install PERL_INSTALL_ROOT=%{buildroot} INSTALLDIRS=vendor
 else
@@ -106,4 +106,4 @@ find %{buildroot} -type f -name '*.bs' -empty -exec rm -f {} ';'
 
 %files perl
 %defattr(-,root,root,-)
-/usr/lib/perl5/vendor_perl/5.30.1/Algorithm/Munkres.pm
+/usr/lib/perl5/vendor_perl/5.30.2/Algorithm/Munkres.pm
