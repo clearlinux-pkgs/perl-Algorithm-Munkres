@@ -1,2 +1,3 @@
 0.08
+perl(Getopt::Long)
 perl(Test::More)
